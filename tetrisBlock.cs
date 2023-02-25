@@ -37,8 +37,9 @@ public class tetrisBlock : MonoBehaviour {
     }
 
     void Rotate(){
-        this.transform.Rotate(0f,0f,90f);
-        
-    }
+        if (Input.GetKey("p")){
+            this.transform.Rotate(0f,0f,90f);
+
+        }
 
 }
