@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class Group : MonoBehaviour
-{
 
+public class Group : MonoBehaviour {
+
+	public TextMeshProUGUI scoreText;
+    //public GameStateManager gsm;
+    private int score = 0;
+    //
     // Time since last gravity tick
     float lastFall = 0;
 
@@ -44,6 +49,10 @@ public class Group : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //gsm = this.GetComponent<GameStateManager>();
+        //scoreText.text = "Example Text";
+ 
         // Default position not valid? Then it's game over
         if (!isValidGridPos()) {
             Debug.Log("GAME OVER");
@@ -54,8 +63,9 @@ public class Group : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         // Move Left
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+        if (Input.GetKeyDown("a")){
             // Modify position
             transform.position += new Vector3(-1, 0, 0);
         
@@ -69,7 +79,7 @@ public class Group : MonoBehaviour
         }
 
         // Move Right
-        else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        else if (Input.GetKeyDown("d")) {
             // Modify position
             transform.position += new Vector3(1, 0, 0);
         
@@ -83,7 +93,7 @@ public class Group : MonoBehaviour
         }
 
         // Rotate
-        else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+        else if (Input.GetKeyDown("w")) {
             transform.Rotate(0, 0, -90);
         
             // See if valid
@@ -96,7 +106,7 @@ public class Group : MonoBehaviour
         }
 
         // Fall
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+        else if (Input.GetKeyDown("s")) {
             // Modify position
             transform.position += new Vector3(0, -1, 0);
 
@@ -121,7 +131,7 @@ public class Group : MonoBehaviour
 
 
         // Move Downwards and Fall
-        else if (Input.GetKeyDown(KeyCode.DownArrow) ||
+        else if (Input.GetKeyDown("s") ||
                 Time.time - lastFall >= 1) {
             // Modify position
             transform.position += new Vector3(0, -1, 0);
@@ -136,6 +146,9 @@ public class Group : MonoBehaviour
 
                 // Clear filled horizontal lines
                 Playfield.deleteFullRows();
+                score += score + 1;
+                //gsm.addScore(score);
+                Debug.Log(score);
 
                 // Spawn next Group
                 FindObjectOfType<Spawner>().spawnNext();
